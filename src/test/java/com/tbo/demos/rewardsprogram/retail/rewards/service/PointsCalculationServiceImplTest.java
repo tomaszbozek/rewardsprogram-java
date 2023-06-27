@@ -1,6 +1,7 @@
 package com.tbo.demos.rewardsprogram.retail.rewards.service;
 
 import com.tbo.demos.rewardsprogram.retail.rewards.model.Transaction;
+import com.tbo.demos.rewardsprogram.retail.rewards.service.impl.PointsCalculationServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,10 +12,10 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class PointsCalculationServiceTest {
+class PointsCalculationServiceImplTest {
 
 	@Autowired
-	private PointsCalculationService pointsCalculationService;
+	private PointsCalculationServiceImpl pointsCalculationService;
 
 	@Test
 	void should_return_2points_for_each_dolar_when_transaction_is_over_100_dolars() {
@@ -72,4 +73,7 @@ class PointsCalculationServiceTest {
 		// then
 		assertThat(point).isEqualTo(110L);
 	}
+
+	// consider other scenarios:
+	// negative points
 }

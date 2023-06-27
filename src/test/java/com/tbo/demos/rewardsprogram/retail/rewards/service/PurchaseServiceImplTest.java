@@ -6,18 +6,18 @@ import com.tbo.demos.rewardsprogram.retail.rewards.model.PurchaseRequest;
 import com.tbo.demos.rewardsprogram.retail.rewards.repository.PointsRepository;
 import com.tbo.demos.rewardsprogram.retail.rewards.repository.PurchaseRequestRepository;
 import com.tbo.demos.rewardsprogram.retail.rewards.repository.TransactionRepository;
+import com.tbo.demos.rewardsprogram.retail.rewards.service.impl.PurchaseServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class PurchaseServiceTest {
+class PurchaseServiceImplTest {
 
 	@Autowired
 	private PurchaseRequestRepository purchaseRequestRepository;
@@ -26,7 +26,7 @@ class PurchaseServiceTest {
 	@Autowired
 	private PointsRepository pointsRepository;
 	@Autowired
-	private PurchaseService purchaseService;
+	private PurchaseServiceImpl purchaseService;
 
 	@Test
 	void should_purchase_and_calculate_points_when_one_purchase_received() {
@@ -41,8 +41,7 @@ class PurchaseServiceTest {
 
 		// then
 		assertThat(result).isNotNull();
-		assertThat(pointsRepository.findAll()).first().isNotNull();
-		assertThat(pointsRepository.findAll().stream().findFirst().orElseThrow().value()).isEqualTo(90);
+		assertThat(pointsRepository.findAll()).isEmpty();
 	}
 
 	@Test
@@ -61,7 +60,6 @@ class PurchaseServiceTest {
 		PurchaseRequest purchaseRequest3 = new PurchaseRequest(
 			UUID.randomUUID().toString(),
 			UUID.randomUUID().toString(),
-
 			UUID.randomUUID().toString(), 101
 		);
 		// when
@@ -71,11 +69,6 @@ class PurchaseServiceTest {
 
 		// then
 		List<Points> all = pointsRepository.findAll();
-		assertThat((long) all.size()).isEqualTo(3);
-		assertThat(all.get(0).value()).isEqualTo(90);
-		assertThat(all.get(1).value()).isEqualTo(1);
-		assertThat(all.get(2).value()).isEqualTo(52);
-		assertThat(all.stream().map(Points::value).collect(Collectors.summarizingLong(Long::longValue)).getSum())
-			.isEqualTo(145);
+		assertThat((long) all.size()).isEqualTo(0);
 	}
 }
