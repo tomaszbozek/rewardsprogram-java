@@ -3,8 +3,9 @@
 ### Reference Documentation
 
 Example application demoing purchase process and points calculation. Only for demo/discussion purposes. Still under
-progress
-and missing parts were mentioned in todo section.
+progress and missing parts were mentioned in todo section.
+
+The purpose of the program was to show how to use optimistic locking in non transactional database in order to avoid race conditions.
 
 Available operations can be obtained via swagger documentation:
 http://localhost:8080/swagger-ui/#/Purchase
